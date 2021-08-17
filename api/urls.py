@@ -1,6 +1,14 @@
-from django.urls import path
-from rest_framework.authtoken import views
+from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.routers import DefaultRouter
+
+from . import views
+
+router = DefaultRouter()
+router.register(r'notes', views.NotesViewSet)
+router.register(r'user', views.UserViewSet)
 
 urlpatterns = [
-    path('get-token', views.obtain_auth_token)
+    path('', include(router.urls)),
+    path('token/', obtain_auth_token),
 ]

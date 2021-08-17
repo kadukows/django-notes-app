@@ -1,0 +1,6 @@
+{
+    "[python]": {
+        "editor.autoClosingBrackets": "languageDefined",
+        "editor.wordBasedSuggestions": true
+    }
+}
