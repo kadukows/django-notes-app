@@ -2,5 +2,6 @@
     "[python]": {
         "editor.autoClosingBrackets": "languageDefined",
         "editor.wordBasedSuggestions": true
-    }
+    },
+    "python.defaultInterpreterPath": "venv/bin/python"
 }
