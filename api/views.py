@@ -22,28 +22,6 @@ class NotesViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
 
-'''
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = models.User.objects.all()
-    serializer_class = serializer.UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-
-    def get_queryset(self):
-        return models.User.objects.filter(id=self.request.user.id).all()
-'''
-
-'''
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.User.objects.all()
-    serializer_class = serializer.UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-
-    def get_queryset(self):
-        return models.User.objects.filter(id=self.request.user.id).all()
-'''
-
 class UserViewSet(viewsets.GenericViewSet, generics.ListCreateAPIView):
     serializer_class = UserSerializer
     queryset = models.User.objects.all()

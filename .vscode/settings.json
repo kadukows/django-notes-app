@@ -6,9 +6,15 @@
     "python.defaultInterpreterPath": "venv/bin/python",
     "[javascript]": {
         "editor.autoClosingBrackets": "languageDefined",
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
     },
     "[typescriptreact]": {
+        "editor.autoClosingBrackets": "languageDefined",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "[typescript]": {
         "editor.autoClosingBrackets": "languageDefined",
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": true

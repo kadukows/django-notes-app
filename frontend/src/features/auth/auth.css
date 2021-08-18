@@ -1,0 +1,17 @@
+.my-table {
+    border-collapse: collapse;
+}
+
+.my-table > tr > td {
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.auth-container {
+    border: 1px solid gray;
+    padding: 15px;
+}
+
+.auth-container > button {
+    margin: 20px;
+}

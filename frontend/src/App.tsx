@@ -1,7 +1,15 @@
 import * as React from "react";
+import AuthStateViewer from "./features/auth/AuthStateViewer";
+import ToggleGetUserUponLoading from "./features/auth/ToggleGetUserUponLoading";
 
 const App = () => {
-    return <h1>Hello react</h1>;
+    return (
+        <>
+            <ToggleGetUserUponLoading />
+            <h1>Hello react</h1>
+            <AuthStateViewer />
+        </>
+    );
 };
 
 export default App;
