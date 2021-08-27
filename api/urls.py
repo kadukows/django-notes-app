@@ -9,12 +9,14 @@ router = DefaultRouter()
 router.register(r'notes', views.NotesViewSet)
 router.register(r'user', views.UserViewSet)
 
+'''
 @csrf_exempt
 def my_obtain_auth_token(request):
     return obtain_auth_token(request)
+'''
 
 urlpatterns = [
     path('', include(router.urls)),
-    #path('token/', obtain_auth_token),
+    #path('token/', my_obtain_auth_token),
     path('token/', obtain_auth_token)
 ]
