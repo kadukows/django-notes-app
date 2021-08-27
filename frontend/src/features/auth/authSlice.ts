@@ -38,13 +38,6 @@ const authSlice = createSlice({
             state.isAuthenticated = true;
             state.isLoading = false;
         },
-        /*
-        setNewUser(state, action: PayloadAction<User>) {
-            state.user = action.payload;
-            state.isAuthenticated = true;
-            state.isLoading = false;
-        },
-        */
         resetTokenAndUser(state) {
             localStorage.removeItem("token");
             state.token = null;
@@ -55,11 +48,6 @@ const authSlice = createSlice({
         setIsLoading(state) {
             state.isLoading = true;
         },
-        /*
-        setToken(state, action: PayloadAction<string>) {
-            state.token = action.payload;
-        },
-        */
     },
 });
 
@@ -70,9 +58,6 @@ export const authReducer = authSlice.reducer;
 export const getUserWithToken =
     (token: string): ThunkAction<void, RootState, unknown, AnyAction> =>
     async (dispatch, getState) => {
-        const state = getState().authReducer;
-        dispatch(setIsLoading());
-
         const config = {
             headers: {
                 Authorization: `Token ${token}`,
@@ -84,9 +69,15 @@ export const getUserWithToken =
             const user = { username: res.data["username"] } as User;
             dispatch(setNewTokenAndUser({ user, token }));
         } catch (err) {
-            console.log(err);
+            //console.log(err);
             dispatch(resetTokenAndUser());
         }
+    };
+
+export const getUserWithCurrentToken =
+    (): ThunkAction<void, RootState, unknown, AnyAction> =>
+    (dispatch, getState) => {
+        dispatch(getUserWithToken(getState().authReducer.token));
     };
 
 export const loginUser =
@@ -95,19 +86,13 @@ export const loginUser =
         password: string
     ): ThunkAction<void, RootState, unknown, AnyAction> =>
     async (dispatch, getState) => {
-        const state = getState().authReducer;
         dispatch(setIsLoading());
 
         const data = { username, password };
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
 
         try {
-            const tokenJson = await axios.post("/api/token/", data, config);
-            const token = tokenJson.data.token;
+            const res = await axios.post("/api/token/", data);
+            const token = res.data.token;
             if (!token) {
                 throw new Error("Wrong token");
             }
