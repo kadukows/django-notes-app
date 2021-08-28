@@ -10,6 +10,9 @@ import {
 import NavBar from "./features/appbar/NavBar";
 import Index from "./features/index/Index";
 import LoginPage from "./features/login/LoginPage";
+import LoginHookForm from "./features/loginHookForm/LoginHookForm";
+import LogoutPage from "./features/auth/LogoutPage";
+import AlertElem from "./features/alerts/AlertElem";
 
 import "./App.css";
 import ToggleGetUserUponLoading from "./features/auth/ToggleGetUserUponLoading";
@@ -33,12 +36,18 @@ const App = () => {
             <NavBar />
             <div className={classes.appBarSpacer} />
             <Container className={classes.container}>
+                <AlertElem />
                 <Switch>
-                    <Route exact path="/">
-                        <Index />
-                    </Route>
+                    <Route
+                        exact
+                        path="/"
+                        render={(props: any) => <Index {...props} />}
+                    />
                     <Route exact path="/login">
-                        <LoginPage />
+                        <LoginHookForm />
+                    </Route>
+                    <Route exact path="/logout">
+                        <LogoutPage />
                     </Route>
                 </Switch>
             </Container>

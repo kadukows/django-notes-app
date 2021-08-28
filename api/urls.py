@@ -18,5 +18,5 @@ def my_obtain_auth_token(request):
 urlpatterns = [
     path('', include(router.urls)),
     #path('token/', my_obtain_auth_token),
-    path('token/', obtain_auth_token)
+    path('token/', views.CustomAuthToken.as_view())
 ]
