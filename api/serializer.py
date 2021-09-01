@@ -8,7 +8,7 @@ class NotesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Note
-        fields = ['id', 'title', 'content', 'owner']
+        fields = ['id', 'title', 'content', 'owner', 'created_at']
 
     def validate_title(self, value):
         if value == 'foobar':

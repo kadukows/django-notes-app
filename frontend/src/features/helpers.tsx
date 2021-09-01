@@ -10,3 +10,29 @@ export function composeWithClassName<
             ...rest,
         });
 }
+
+export const sleep = (timeout: number) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
+export const maxArray = (arr: Array<any>, cmp: Function) => {
+    if (arr.length < 1) {
+        return null;
+    }
+
+    let res = arr[0];
+
+    for (const obj of arr) {
+        if (!cmp(res, obj)) {
+            res = obj;
+        }
+    }
+
+    return res;
+};
+
+export function maxCmpToReducer(cmp: Function) {
+    return (cur: any, next: any) => {
+        return cmp(cur, next) ? next : cur;
+    };
+}

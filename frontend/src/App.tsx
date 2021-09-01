@@ -13,9 +13,13 @@ import LoginPage from "./features/login/LoginPage";
 import LoginHookForm from "./features/loginHookForm/LoginHookForm";
 import LogoutPage from "./features/auth/LogoutPage";
 import AlertElem from "./features/alerts/AlertElem";
+import NotesDataGrid from "./features/notes/NotesDataGrid";
+import NoteForm from "./features/notes/NoteForm";
 
 import "./App.css";
 import ToggleGetUserUponLoading from "./features/auth/ToggleGetUserUponLoading";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -30,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
     const classes = useStyles();
+    const notes = useSelector((state: RootState) => state.notesReducer);
 
     return (
         <HashRouter>
@@ -48,6 +53,12 @@ const App = () => {
                     </Route>
                     <Route exact path="/logout">
                         <LogoutPage />
+                    </Route>
+                    <Route exact path="/notes">
+                        <NotesDataGrid />
+                    </Route>
+                    <Route exact path="/notes/:id">
+                        <NoteForm />
                     </Route>
                 </Switch>
             </Container>

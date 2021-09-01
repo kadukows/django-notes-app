@@ -7,7 +7,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
-interface Note {
+export interface Note {
     id: number;
     title: string;
     content: string;
@@ -39,10 +39,20 @@ const notesSlice = createSlice({
                 (note) => note.id != action.payload
             );
         },
+        updateNote(state, action: PayloadAction<Note>) {
+            const found = state.notes.find(
+                (note) => note.id == action.payload.id
+            );
+            if (found) {
+                found.title = action.payload.title;
+                found.content = action.payload.content;
+            }
+        },
     },
 });
 
-export const { addNote, removeNote, setNotes, resetNotes } = notesSlice.actions;
+export const { addNote, removeNote, setNotes, resetNotes, updateNote } =
+    notesSlice.actions;
 export const notesReducer = notesSlice.reducer;
 
 export const getNotes =

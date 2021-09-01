@@ -1,20 +1,8 @@
 import * as React from "react";
 import { Button, makeStyles, Grid } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { pushAlert } from "./alertsSlice";
-import { gridClasses } from "@mui/x-data-grid";
-
-interface Props {}
-
-/*
-function composeWithClassName<C>(component: C, composedClass: string) {
-    type Props = React.ComponentProps<C>;
-    return ({ className, ...rest }: Props) =>
-        React.createElement(component, {
-            className: `${composedClass} ${className}`,
-            ...rest,
-        });
-}*/
+import { pushAlertAndPopAfterTimeout, addAlertWithoutId } from "./alertsSlice";
+import { Alert } from "./alertsSlice";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,28 +15,45 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const AlertWidget = (props: Props) => {
+const AlertWidget = () => {
     const classes = useStyles();
 
     const MyButton = (props: React.ComponentProps<typeof Button>) => (
-        <Button variant="contained" color="primary" {...props} />
+        <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            {...props}
+        />
     );
     const dispatch = useDispatch();
 
     const onInfo = () => {
         dispatch(
-            pushAlert({
+            pushAlertAndPopAfterTimeout({
                 type: "info",
                 message: "This is simple info alert",
+                closeable: false,
+            })
+        );
+    };
+
+    const onInfoCloseable = () => {
+        dispatch(
+            addAlertWithoutId({
+                type: "info",
+                message: "This is simple closeble info alert",
+                closeable: true,
             })
         );
     };
 
     const onWarning = () => {
         dispatch(
-            pushAlert({
+            pushAlertAndPopAfterTimeout({
                 type: "warning",
                 message: "This is simple warnin alert",
+                closeable: false,
             })
         );
     };
@@ -59,6 +64,7 @@ const AlertWidget = (props: Props) => {
             <MyButton onClick={onWarning} color="secondary">
                 Warning
             </MyButton>
+            <MyButton onClick={onInfoCloseable}>Info c</MyButton>
         </div>
     );
 };

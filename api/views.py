@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from rest_framework import viewsets, generics, views, mixins
 from rest_framework import permissions
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
@@ -22,6 +23,13 @@ class NotesViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer: NotesSerializer):
         serializer.save(owner=self.request.user)
+    
+    def list(self, request):
+        queryset: QuerySet[models.Note] = self.get_queryset().order_by("-created_at", )
+        serializer: NotesSerializer = self.get_serializer_class()
+        return Response(serializer(queryset.all(), many=True).data, headers={
+            "Last-Modified": queryset.first().created_at
+        })
 
 
 class UserViewSet(viewsets.GenericViewSet, generics.ListCreateAPIView):

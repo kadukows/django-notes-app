@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: theme.spacing(1, 1, 1, 1),
+        padding: theme.spacing(1, 1),
     },
     form: {
         marginTop: theme.spacing(1),

@@ -50,6 +50,7 @@ const AuthLinks = () => {
     return (
         <Typography variant="h6">
             <MyButton to="/">Index</MyButton>
+            <MyButton to="/notes">Notes</MyButton>
             <MyButton to="/logout">Logout</MyButton>
         </Typography>
     );
