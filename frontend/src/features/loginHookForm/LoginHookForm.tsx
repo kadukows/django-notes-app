@@ -120,7 +120,8 @@ const LoginHookForm = (props: Props) => {
     };
 
     if (authState.isAuthenticated) {
-        return <Redirect to="/" />;
+        //return <Redirect to="/" />;
+        throw new Error("authenitcated user tried to access login form?");
     }
 
     return (

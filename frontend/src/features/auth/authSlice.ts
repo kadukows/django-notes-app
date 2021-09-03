@@ -22,7 +22,7 @@ interface TokenAndUser {
 
 const initialState = {
     token: localStorage.getItem("token"),
-    isLoading: false,
+    isLoading: localStorage.getItem("token") ? true : false,
     isAuthenticated: false,
     user: null,
 } as AuthState;

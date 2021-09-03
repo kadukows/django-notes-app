@@ -7,6 +7,8 @@ import {
     HashRouter,
 } from "react-router-dom";
 
+import PrivateRoute from "./features/auth/PrivateRoute";
+
 import NavBar from "./features/appbar/NavBar";
 import Index from "./features/index/Index";
 import LoginPage from "./features/login/LoginPage";
@@ -48,18 +50,27 @@ const App = () => {
                         path="/"
                         render={(props: any) => <Index {...props} />}
                     />
-                    <Route exact path="/login">
-                        <LoginHookForm />
-                    </Route>
+                    <PrivateRoute
+                        inverse
+                        exact
+                        path="/login"
+                        component={LoginHookForm}
+                    />
                     <Route exact path="/logout">
                         <LogoutPage />
                     </Route>
-                    <Route exact path="/notes">
-                        <NotePage />
-                    </Route>
-                    <Route exact path="/notes/:id">
-                        <NoteForm />
-                    </Route>
+                    <PrivateRoute
+                        exact
+                        path="/notes"
+                        name="Notes"
+                        component={NotePage}
+                    />
+                    <PrivateRoute
+                        exact
+                        path="/notes/:id"
+                        name="Note Detail"
+                        component={NoteForm}
+                    />
                 </Switch>
             </Container>
             <ToggleGetUserUponLoading />
