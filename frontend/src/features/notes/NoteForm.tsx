@@ -59,7 +59,6 @@ interface Params {
 }
 
 const NoteForm = () => {
-    //const id = parseInt(useParams<Params>().id);
     const params = useParams<Params>();
     const id = parseInt(params.id);
     const state = useSelector((state: RootState) => state);
@@ -69,6 +68,18 @@ const NoteForm = () => {
     const history = useHistory();
 
     const note = state.notesReducer.notes.find((note) => note.id == id);
+
+    React.useEffect(() => {
+        if (!note) {
+            dispatch(
+                addAlertWithoutId({
+                    type: "warning",
+                    message: `Note with id: ${id} not found`,
+                    closeable: true,
+                })
+            );
+        }
+    });
 
     const {
         register,
@@ -132,14 +143,6 @@ const NoteForm = () => {
             if (axios.isAxiosError(err)) {
                 const error: AxiosError<InputsError> = err;
                 if (error.response?.data) {
-                    const fieldList = ["title", "content"];
-                    /*
-                    for (const field of fieldList) {
-                        // @ts-ignore
-                        setError(field, error.response.data[field]);
-                    }
-                    */
-
                     setErrorField("title", error.response.data);
                     setErrorField("content", error.response.data);
                 }

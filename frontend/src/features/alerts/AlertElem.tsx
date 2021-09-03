@@ -13,22 +13,24 @@ const AlertElem = () => {
 
     const dispatch = useDispatch();
 
-    return (
-        <React.Fragment>
-            {alerts.map((alert) => (
-                <AlertMui
-                    severity={alert.type}
-                    onClose={
-                        alert.closeable
-                            ? () => dispatch(removeAlert(alert.id))
-                            : undefined
-                    }
-                >
-                    {alert.message}
-                </AlertMui>
-            ))}
-        </React.Fragment>
-    );
+    function mapAlerts(alerts: AlertWithId[]) {
+        let i = 0;
+        return alerts.map((alert) => (
+            <AlertMui
+                key={i++}
+                severity={alert.type}
+                onClose={
+                    alert.closeable
+                        ? () => dispatch(removeAlert(alert.id))
+                        : undefined
+                }
+            >
+                {alert.message}
+            </AlertMui>
+        ));
+    }
+
+    return <React.Fragment>{mapAlerts(alerts)}</React.Fragment>;
 };
 
 export default AlertElem;

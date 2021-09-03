@@ -13,8 +13,8 @@ import LoginPage from "./features/login/LoginPage";
 import LoginHookForm from "./features/loginHookForm/LoginHookForm";
 import LogoutPage from "./features/auth/LogoutPage";
 import AlertElem from "./features/alerts/AlertElem";
-import NotesDataGrid from "./features/notes/NotesDataGrid";
 import NoteForm from "./features/notes/NoteForm";
+import NotePage from "./features/notes/NotePage";
 
 import "./App.css";
 import ToggleGetUserUponLoading from "./features/auth/ToggleGetUserUponLoading";
@@ -55,7 +55,7 @@ const App = () => {
                         <LogoutPage />
                     </Route>
                     <Route exact path="/notes">
-                        <NotesDataGrid />
+                        <NotePage />
                     </Route>
                     <Route exact path="/notes/:id">
                         <NoteForm />
