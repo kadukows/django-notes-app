@@ -2,7 +2,7 @@
     border-collapse: collapse;
 }
 
-.my-table > tr > td {
+.my-table > tbody > tr > td {
     padding: 20px;
     border: 1px solid black;
 }

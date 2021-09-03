@@ -69,7 +69,6 @@ export const getUserWithToken =
             const user = { username: res.data["username"] } as User;
             dispatch(setNewTokenAndUser({ user, token }));
         } catch (err) {
-            //console.log(err);
             dispatch(resetTokenAndUser());
         }
     };

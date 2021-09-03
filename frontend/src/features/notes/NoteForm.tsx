@@ -160,7 +160,6 @@ const NoteForm = () => {
 
     return (
         <>
-            <CssBaseline />
             <Grid container justifyContent="space-around">
                 <Grid item>
                     <Paper className={classes.paper}>

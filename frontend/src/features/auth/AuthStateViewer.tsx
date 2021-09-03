@@ -15,23 +15,25 @@ const AuthStateViewer = (props: Props) => {
 
     return (
         <div className="auth-container">
-            <table className={"my-table"}>
-                <tr>
-                    <td>token</td>
-                    <td>{auth.token}</td>
-                </tr>
-                <tr>
-                    <td>isLoading</td>
-                    <td>{auth.isLoading.toString()}</td>
-                </tr>
-                <tr>
-                    <td>isAuthenticated</td>
-                    <td>{auth.isAuthenticated.toString()}</td>
-                </tr>
-                <tr>
-                    <td>Username</td>
-                    <td>{auth.user?.username}</td>
-                </tr>
+            <table className="my-table">
+                <tbody>
+                    <tr>
+                        <td>token</td>
+                        <td>{auth.token}</td>
+                    </tr>
+                    <tr>
+                        <td>isLoading</td>
+                        <td>{auth.isLoading.toString()}</td>
+                    </tr>
+                    <tr>
+                        <td>isAuthenticated</td>
+                        <td>{auth.isAuthenticated.toString()}</td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td>{auth.user?.username}</td>
+                    </tr>
+                </tbody>
             </table>
             <button onClick={() => dispatch(resetTokenAndUser())}>Reset</button>
             <button

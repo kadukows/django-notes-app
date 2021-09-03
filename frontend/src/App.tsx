@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Grid, makeStyles, AppBar, Container } from "@material-ui/core";
+import {
+    Grid,
+    makeStyles,
+    AppBar,
+    Container,
+    CssBaseline,
+} from "@material-ui/core";
 import {
     HashRouter as Router,
     Switch,
@@ -40,6 +46,7 @@ const App = () => {
 
     return (
         <HashRouter>
+            <CssBaseline />
             <NavBar />
             <div className={classes.appBarSpacer} />
             <Container className={classes.container}>
