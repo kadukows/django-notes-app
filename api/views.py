@@ -23,7 +23,7 @@ class NotesViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer: NotesSerializer):
         serializer.save(owner=self.request.user)
-    
+
     def list(self, request):
         queryset: QuerySet[models.Note] = self.get_queryset().order_by("-created_at", )
         serializer: NotesSerializer = self.get_serializer_class()
@@ -47,6 +47,8 @@ class UserViewSet(viewsets.GenericViewSet, generics.ListCreateAPIView):
 
     def list(self, request: Request, *args, **kwargs):
         serializer = UserSerializer(request.user)
+        from time import sleep
+        sleep(1.5)
         return Response(serializer.data)
 
 

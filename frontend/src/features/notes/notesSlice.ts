@@ -15,10 +15,12 @@ export interface Note {
 
 interface NotesStates {
     notes: Array<Note>;
+    loaded: boolean;
 }
 
 const initialState: NotesStates = {
     notes: [],
+    loaded: false,
 };
 
 const notesSlice = createSlice({
@@ -48,12 +50,17 @@ const notesSlice = createSlice({
                 found.content = action.payload.content;
             }
         },
+        setLoaded(state) {
+            state.loaded = true;
+        },
     },
 });
 
-export const { addNote, removeNote, setNotes, resetNotes, updateNote } =
+const { addNote, removeNote, setNotes, resetNotes, updateNote, setLoaded } =
     notesSlice.actions;
 export const notesReducer = notesSlice.reducer;
+
+export { updateNote };
 
 export const getNotes =
     (): ThunkAction<void, RootState, unknown, AnyAction> =>
@@ -72,6 +79,8 @@ export const getNotes =
             const res = await axios.get("/api/notes/", config);
             dispatch(setNotes(res.data));
         } catch (err: any) {
-            dispatch(resetNotes);
+            dispatch(resetNotes());
+        } finally {
+            dispatch(setLoaded());
         }
     };

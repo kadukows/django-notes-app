@@ -52,32 +52,25 @@ const App = () => {
             <Container className={classes.container}>
                 <AlertElem />
                 <Switch>
-                    <Route
-                        exact
-                        path="/"
-                        render={(props: any) => <Index {...props} />}
-                    />
-                    <PrivateRoute
-                        inverse
-                        exact
-                        path="/login"
-                        component={LoginHookForm}
-                    />
+                    <Route exact path="/">
+                        <Index />
+                    </Route>
+
+                    <PrivateRoute inverse exact path="/login">
+                        <LoginHookForm />
+                    </PrivateRoute>
+
                     <Route exact path="/logout">
                         <LogoutPage />
                     </Route>
-                    <PrivateRoute
-                        exact
-                        path="/notes"
-                        name="Notes"
-                        component={NotePage}
-                    />
-                    <PrivateRoute
-                        exact
-                        path="/notes/:id"
-                        name="Note Detail"
-                        component={NoteForm}
-                    />
+
+                    <PrivateRoute exact path="/notes" name="Notes">
+                        <NotePage />
+                    </PrivateRoute>
+
+                    <PrivateRoute exact path="/notes/:id" name="Note Detail">
+                        <NoteForm />
+                    </PrivateRoute>
                 </Switch>
             </Container>
             <ToggleGetUserUponLoading />

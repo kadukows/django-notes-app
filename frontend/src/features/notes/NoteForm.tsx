@@ -69,18 +69,6 @@ const NoteForm = () => {
 
     const note = state.notesReducer.notes.find((note) => note.id == id);
 
-    React.useEffect(() => {
-        if (!note) {
-            dispatch(
-                addAlertWithoutId({
-                    type: "warning",
-                    message: `Note with id: ${id} not found`,
-                    closeable: true,
-                })
-            );
-        }
-    });
-
     const {
         register,
         handleSubmit,
@@ -134,7 +122,7 @@ const NoteForm = () => {
             dispatch(
                 addAlertWithoutId({
                     type: "info",
-                    message: `Update a note: "${note.title}"`,
+                    message: `Updated a note: "${res.data.title}"`,
                     closeable: true,
                 })
             );
@@ -154,16 +142,14 @@ const NoteForm = () => {
         }
     };
 
-    if (!note) {
-        return <Redirect to="/" />;
-    }
-
     return (
         <>
             <Grid container justifyContent="space-around">
                 <Grid item>
                     <Paper className={classes.paper}>
-                        <Typography></Typography>
+                        <Typography variant="h5" component="h5">
+                            Edit note
+                        </Typography>
                         <form
                             className={classes.form}
                             onSubmit={handleSubmit(onSubmit)}

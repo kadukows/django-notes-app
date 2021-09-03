@@ -7,7 +7,7 @@ import {
     GridValueGetterParams,
 } from "@mui/x-data-grid";
 import { Link as RouterLink } from "react-router-dom";
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button, Paper, makeStyles, Typography } from "@material-ui/core";
 import { getNotes } from "./notesSlice";
 
 import { RootState } from "../../store";
@@ -33,6 +33,15 @@ const columns: GridColDef[] = [
     },
 ];
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        padding: theme.spacing(2),
+    },
+    typo: {
+        marginBottom: theme.spacing(1),
+    },
+}));
+
 const NotesDataGrid = () => {
     const notes = useSelector((state: RootState) => state.notesReducer);
     const auth = useSelector((state: RootState) => state.authReducer);
@@ -40,18 +49,24 @@ const NotesDataGrid = () => {
     React.useEffect(() => {
         dispatch(getNotes());
     }, [auth]);
+    const classes = useStyles();
 
     return (
-        <DataGrid
-            rows={notes.notes}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            style={{
-                height: 400,
-                width: "100%",
-            }}
-        />
+        <Paper className={classes.paper}>
+            <Typography className={classes.typo} component="h5" variant="h5">
+                Notes
+            </Typography>
+            <DataGrid
+                rows={notes.notes}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                style={{
+                    height: 400,
+                    width: "100%",
+                }}
+            />
+        </Paper>
     );
 };
 

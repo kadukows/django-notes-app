@@ -8,7 +8,7 @@ interface User {
     username: string;
 }
 
-interface AuthState {
+export interface AuthState {
     token: string;
     isLoading: boolean;
     isAuthenticated: boolean;
