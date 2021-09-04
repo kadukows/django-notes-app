@@ -31,6 +31,14 @@ interface InputsError {
     non_field_errors: Array<string>;
 }
 
+interface Props extends Partial<Inputs> {
+    makeRequest: (
+        dispatch: ReturnType<typeof useDispatch>,
+        history: ReturnType<typeof useHistory>,
+        data: Inputs
+    ) => void;
+}
+
 const schema = yup.object().shape({
     title: yup.string().required(),
     content: yup.string().required(),
@@ -54,20 +62,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface Params {
-    id: string;
-}
-
-const NoteForm = () => {
-    const params = useParams<Params>();
-    const id = parseInt(params.id);
+const NoteForm = ({ title, content, makeRequest }: Props) => {
     const state = useSelector((state: RootState) => state);
     const dispatch = useDispatch();
     const [nonFieldError, setNonFieldError] = React.useState<Array<string>>([]);
     const classes = useStyles();
     const history = useHistory();
-
-    const note = state.notesReducer.notes.find((note) => note.id == id);
 
     const {
         register,
@@ -78,8 +78,8 @@ const NoteForm = () => {
         resolver: yupResolver(schema),
         mode: "onBlur",
         defaultValues: {
-            title: note?.title,
-            content: note?.content,
+            title,
+            content,
         },
     });
 
@@ -113,20 +113,7 @@ const NoteForm = () => {
         };
 
         try {
-            const res: AxiosResponse<Note> = await axios.put(
-                `/api/notes/${id}/`,
-                data,
-                config
-            );
-            dispatch(updateNote(res.data));
-            dispatch(
-                addAlertWithoutId({
-                    type: "info",
-                    message: `Updated a note: "${res.data.title}"`,
-                    closeable: true,
-                })
-            );
-            history.push("/notes");
+            await makeRequest(dispatch, history, data);
         } catch (err: any | AxiosError<InputsError>) {
             if (axios.isAxiosError(err)) {
                 const error: AxiosError<InputsError> = err;

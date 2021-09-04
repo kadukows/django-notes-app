@@ -119,11 +119,6 @@ const LoginHookForm = (props: Props) => {
         }
     };
 
-    if (authState.isAuthenticated) {
-        //return <Redirect to="/" />;
-        throw new Error("authenitcated user tried to access login form?");
-    }
-
     return (
         <>
             <CssBaseline />
@@ -144,6 +139,7 @@ const LoginHookForm = (props: Props) => {
                                 label="Username"
                                 error={!!errors.username}
                                 helperText={errors.username?.message}
+                                disabled={isSubmitting}
                                 {...register("username")}
                             />
 
@@ -155,6 +151,7 @@ const LoginHookForm = (props: Props) => {
                                 helperText={errors.password?.message}
                                 label="Password"
                                 type="password"
+                                disabled={isSubmitting}
                                 {...register("password")}
                             />
 

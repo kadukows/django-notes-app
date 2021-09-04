@@ -11,16 +11,19 @@ export interface Note {
     id: number;
     title: string;
     content: string;
+    created_at: string;
 }
 
 interface NotesStates {
     notes: Array<Note>;
     loaded: boolean;
+    loading: boolean;
 }
 
 const initialState: NotesStates = {
     notes: [],
     loaded: false,
+    loading: false,
 };
 
 const notesSlice = createSlice({
@@ -53,21 +56,38 @@ const notesSlice = createSlice({
         setLoaded(state) {
             state.loaded = true;
         },
+        setLoading(state, action: PayloadAction<boolean>) {
+            state.loading = action.payload;
+        },
     },
 });
 
-const { addNote, removeNote, setNotes, resetNotes, updateNote, setLoaded } =
-    notesSlice.actions;
+const {
+    addNote,
+    removeNote,
+    setNotes,
+    resetNotes,
+    updateNote,
+    setLoaded,
+    setLoading,
+} = notesSlice.actions;
 export const notesReducer = notesSlice.reducer;
 
-export { updateNote };
+export { updateNote, addNote };
 
 export const getNotes =
     (): ThunkAction<void, RootState, unknown, AnyAction> =>
     async (dispatch, getState) => {
         if (!getState().authReducer.isAuthenticated) {
+            dispatch(setLoaded());
             return;
         }
+
+        if (getState().notesReducer.loading) {
+            return;
+        }
+
+        dispatch(setLoading(true));
 
         const config = {
             headers: {
@@ -81,6 +101,7 @@ export const getNotes =
         } catch (err: any) {
             dispatch(resetNotes());
         } finally {
+            dispatch(setLoading(false));
             dispatch(setLoaded());
         }
     };

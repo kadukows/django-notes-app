@@ -28,6 +28,8 @@ import "./App.css";
 import ToggleGetUserUponLoading from "./features/auth/ToggleGetUserUponLoading";
 import { useSelector } from "react-redux";
 import { RootState } from "./store";
+import NoteDetailEdit from "./features/notes/NoteDetailEdit";
+import NewNote from "./features/notes/NewNote";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -56,7 +58,7 @@ const App = () => {
                         <Index />
                     </Route>
 
-                    <PrivateRoute inverse exact path="/login">
+                    <PrivateRoute inverse exact path="/login" noAlert>
                         <LoginHookForm />
                     </PrivateRoute>
 
@@ -68,8 +70,12 @@ const App = () => {
                         <NotePage />
                     </PrivateRoute>
 
+                    <PrivateRoute exact path="/notes/new" name="New Note">
+                        <NewNote />
+                    </PrivateRoute>
+
                     <PrivateRoute exact path="/notes/:id" name="Note Detail">
-                        <NoteForm />
+                        <NoteDetailEdit />
                     </PrivateRoute>
                 </Switch>
             </Container>

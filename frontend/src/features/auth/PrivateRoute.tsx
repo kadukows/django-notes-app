@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 
 import { RootState } from "../../store";
 import { Alert } from "../alerts/alertsSlice";
@@ -11,6 +11,7 @@ interface Props {
     inverse?: boolean;
     previousPage?: string;
     name?: string;
+    noAlert?: boolean;
     path: string;
     [n: string]: any;
 }
@@ -20,6 +21,7 @@ function PrivateRoute({
     name,
     previousPage,
     children,
+    noAlert,
     ...rest
 }: React.PropsWithChildren<Props>): React.ReactElement {
     const useSlice = () => useSelector((state: RootState) => state.authReducer);
@@ -28,25 +30,29 @@ function PrivateRoute({
 
     const passed = !inverse ? auth.isAuthenticated : !auth.isAuthenticated;
 
-    const redirectAlert: Alert = {
-        type: "warning",
-        message: `You need to be ${
-            !inverse ? "logged in" : "logged out"
-        } in order to access ${name ? `"${name}"` : "that"} page.`,
-        closeable: true,
-    };
+    let RedirectComponent: any;
+    if (!noAlert) {
+        const redirectAlert: Alert = {
+            type: "warning",
+            message: `You need to be ${
+                !inverse ? "logged in" : "logged out"
+            } in order to access ${name ? `"${name}"` : "that"} page.`,
+            closeable: true,
+        };
+
+        RedirectComponent = (props: any) => (
+            <RedirectWithAlert alert={redirectAlert} {...props} />
+        );
+    } else {
+        RedirectComponent = (props: any) => <Redirect {...props} />;
+    }
+
+    const to = previousPage ? previousPage : "/";
 
     return (
         <Route {...rest}>
             <Loader useSlice={useSlice} precondition={authIsLoaded}>
-                {passed ? (
-                    children
-                ) : (
-                    <RedirectWithAlert
-                        alert={redirectAlert}
-                        to={previousPage ? previousPage : "/"}
-                    />
-                )}
+                {passed ? children : <RedirectComponent to={to} />}
             </Loader>
         </Route>
     );

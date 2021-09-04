@@ -64,6 +64,8 @@ export const getUserWithToken =
             },
         };
 
+        dispatch(setIsLoading());
+
         try {
             const res = await axios.get("/api/user/", config);
             const user = { username: res.data["username"] } as User;
