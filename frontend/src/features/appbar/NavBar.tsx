@@ -9,11 +9,13 @@ import {
     styled,
     Button,
 } from "@material-ui/core";
+import { Brightness4, Brightness7 } from "@material-ui/icons";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { Link as RouterLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { composeWithClassName } from "../helpers";
+import { toggleDarkMode } from "../darkThemeProvider/darkThemeProviderSlice";
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -37,6 +39,7 @@ const NoAuthLinks = () => {
         <>
             <MyButton to="/">Index</MyButton>
             <MyButton to="/login">Login</MyButton>
+            <MyButton to="/register">Register</MyButton>
         </>
     );
 };
@@ -59,6 +62,11 @@ const AuthLinks = () => {
 const NavBar = () => {
     const classes = useStyles();
     const auth = useSelector((state: RootState) => state.authReducer);
+    const darkMode = useSelector(
+        (state: RootState) => state.darkThemeProviderReducer.darkMode
+    );
+    const dispatch = useDispatch();
+
     return (
         <div className={classes.root}>
             <AppBar position="absolute">
@@ -73,6 +81,13 @@ const NavBar = () => {
                     </IconButton>
 
                     {auth.isAuthenticated ? <AuthLinks /> : <NoAuthLinks />}
+                    <div style={{ flexGrow: 1 }} />
+                    <Button
+                        color="inherit"
+                        onClick={() => dispatch(toggleDarkMode())}
+                    >
+                        {darkMode ? <Brightness7 /> : <Brightness4 />}
+                    </Button>
                 </Toolbar>
             </AppBar>
         </div>

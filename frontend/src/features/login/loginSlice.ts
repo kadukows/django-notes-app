@@ -53,8 +53,6 @@ export const postLoginForm =
         } catch (err) {
             if (err.response) {
                 dispatch(setErrors(err.response.data));
-            } else {
-                console.log(err);
             }
         }
     };

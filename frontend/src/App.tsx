@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-    Grid,
-    makeStyles,
-    AppBar,
-    Container,
-    CssBaseline,
-} from "@material-ui/core";
+import { Grid, makeStyles, Container, CssBaseline } from "@material-ui/core";
 import {
     HashRouter as Router,
     Switch,
@@ -30,6 +24,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store";
 import NoteDetailEdit from "./features/notes/NoteDetailEdit";
 import NewNote from "./features/notes/NewNote";
+import RegisterForm from "./features/register/RegisterForm";
+import DarkThemeProvider from "./features/darkThemeProvider/DarkThemeProvider";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -46,63 +42,78 @@ const App = () => {
     const classes = useStyles();
 
     return (
-        <HashRouter>
-            <CssBaseline />
-            <NavBar />
-            <div className={classes.appBarSpacer} />
-            <Container className={classes.container}>
-                <Grid container spacing={2} direction="column">
-                    <Grid item container direction="row">
-                        <Grid item xs={12}>
-                            <AlertElem />
-                        </Grid>
-                    </Grid>
-                    <Grid item container direction="row">
-                        <Grid item xs={12}>
-                            <Switch>
-                                <Route exact path="/">
-                                    <Index />
-                                </Route>
-
-                                <PrivateRoute
-                                    inverse
-                                    exact
-                                    path="/login"
-                                    noAlert
-                                >
-                                    <LoginHookForm />
-                                </PrivateRoute>
-
-                                <Route exact path="/logout">
-                                    <LogoutPage />
-                                </Route>
-
-                                <PrivateRoute exact path="/notes" name="Notes">
-                                    <NotePage />
-                                </PrivateRoute>
-
-                                <PrivateRoute
-                                    exact
-                                    path="/notes/new"
-                                    name="New Note"
-                                >
-                                    <NewNote />
-                                </PrivateRoute>
-
-                                <PrivateRoute
-                                    exact
-                                    path="/notes/:id"
-                                    name="Note Detail"
-                                >
-                                    <NoteDetailEdit />
-                                </PrivateRoute>
-                            </Switch>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Container>
+        <DarkThemeProvider>
             <ToggleGetUserUponLoading />
-        </HashRouter>
+            <CssBaseline />
+            <Router>
+                <NavBar />
+                <div className={classes.appBarSpacer} />
+                <Container className={classes.container}>
+                    <Grid container spacing={2} direction="column">
+                        <Grid item container direction="row">
+                            <Grid item xs={12}>
+                                <AlertElem />
+                            </Grid>
+                        </Grid>
+                        <Grid item container direction="row">
+                            <Grid item xs={12}>
+                                <Switch>
+                                    <Route exact path="/">
+                                        <Index />
+                                    </Route>
+
+                                    <PrivateRoute
+                                        inverse
+                                        exact
+                                        path="/login"
+                                        noAlert
+                                    >
+                                        <LoginHookForm />
+                                    </PrivateRoute>
+
+                                    <Route exact path="/logout">
+                                        <LogoutPage />
+                                    </Route>
+
+                                    <PrivateRoute
+                                        exact
+                                        inverse
+                                        path="/register"
+                                        name="Register"
+                                    >
+                                        <RegisterForm />
+                                    </PrivateRoute>
+
+                                    <PrivateRoute
+                                        exact
+                                        path="/notes"
+                                        name="Notes"
+                                    >
+                                        <NotePage />
+                                    </PrivateRoute>
+
+                                    <PrivateRoute
+                                        exact
+                                        path="/notes/new"
+                                        name="New Note"
+                                    >
+                                        <NewNote />
+                                    </PrivateRoute>
+
+                                    <PrivateRoute
+                                        exact
+                                        path="/notes/:id"
+                                        name="Note Detail"
+                                    >
+                                        <NoteDetailEdit />
+                                    </PrivateRoute>
+                                </Switch>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </Router>
+        </DarkThemeProvider>
     );
 };
 

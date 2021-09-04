@@ -26,6 +26,12 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
+    def validate_username(self, value):
+        if value == 'foobar':
+            raise serializers.ValidationError("Can't be equal to 'foobar'")
+
+        return value
+
     def create(self, validated_data):
         user: User = User.objects.create(
             username=validated_data['username']

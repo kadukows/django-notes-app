@@ -97,7 +97,6 @@ const LoginHookForm = (props: Props) => {
                 username,
                 password,
             });
-            console.log(response.data.token);
             dispatch(getUserWithToken(response.data.token));
         } catch (err: any | AxiosError<Partial<Error>>) {
             if (axios.isAxiosError(err)) {
@@ -121,7 +120,6 @@ const LoginHookForm = (props: Props) => {
 
     return (
         <>
-            <CssBaseline />
             <Grid container justifyContent="space-around">
                 <Grid item>
                     <Paper className={classes.paper}>
